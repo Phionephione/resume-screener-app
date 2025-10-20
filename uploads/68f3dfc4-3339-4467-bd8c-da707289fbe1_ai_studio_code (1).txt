@@ -1,0 +1,22 @@
+MICHAEL CHEN
+(111) 222-3333 | michael.chen@email.com | linkedin.com/in/michaelchen
+
+--- Summary ---
+A highly analytical and experienced Data Analyst with 5 years of experience turning complex data into actionable insights. Proven expertise in advanced SQL, Python for data science, and creating compelling dashboards in Tableau. A natural leader with project management experience.
+
+--- Professional Experience ---
+
+Senior Data Analyst | Insight Corp | 2021 - Present
+- Led a project to analyze customer behavior data, using Python (Pandas, Matplotlib) and SQL to identify key retention drivers, which led to a 15% reduction in churn.
+- Designed and built a suite of interactive dashboards in Tableau to track company KPIs, now used daily by the executive team.
+- Performed in-depth statistical analysis on marketing campaign performance to optimize ad spend.
+
+Data Analyst | DataDrive Inc. | 2019 - 2021
+- Wrote and optimized complex SQL queries to provide data for the product team.
+- Developed automated reports to monitor sales trends.
+
+--- Skills ---
+- Data Analysis: Python (Pandas, NumPy), R, Statistical Analysis
+- Databases: Advanced SQL (PostgreSQL, MySQL)
+- Data Visualization: Tableau, Power BI
+- Project Management: Agile, Jira

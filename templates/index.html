@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Resume Screener</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-start: #6a11cb;
+            --primary-end: #2575fc;
+            --background-start: #f5f7fa;
+            --background-end: #c3cfe2;
+            --card-background: rgba(255, 255, 255, 0.85);
+            --text-primary: #1a202c;
+            --text-secondary: #4a5568;
+            --border-color: rgba(0, 0, 0, 0.1);
+            --danger-color: #e53e3e;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(45deg, var(--background-start), var(--background-end));
+            animation: gradient-animation 15s ease infinite;
+            background-size: 200% 200%;
+        }
+
+        @keyframes gradient-animation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            background: var(--card-background);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 700px;
+            padding: 50px 60px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.8em;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--primary-start), var(--primary-end));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            color: var(--text-secondary);
+            font-size: 1.1em;
+            margin-bottom: 40px;
+        }
+
+        form { text-align: left; }
+        /* Adjusted margin for a cleaner look */
+        .form-section { margin-bottom: 35px; }
+
+        .file-upload-area {
+            border: 2px dashed var(--border-color);
+            border-radius: 16px;
+            padding: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 180px;
+        }
+        .file-upload-area:hover, .file-upload-area.is-dragover {
+            border-color: var(--primary-start);
+            background: rgba(255, 255, 255, 0.5);
+        }
+        input[type="file"] { display: none; }
+        .upload-icon svg {
+            width: 48px;
+            height: 48px;
+            stroke: url(#icon-gradient);
+            margin-bottom: 15px;
+        }
+        .upload-text {
+            font-weight: 600;
+            color: #333;
+        }
+        .upload-hint {
+            font-size: 0.9em;
+            color: var(--text-secondary);
+            margin-top: 5px;
+        }
+
+        #file-list-container {
+            margin-top: 20px;
+            text-align: left;
+        }
+        .file-item {
+            background-color: #f7f9fa;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 10px 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            font-size: 0.9em;
+        }
+        .file-name {
+            color: var(--text-primary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .remove-btn {
+            background: none;
+            border: none;
+            color: var(--danger-color);
+            cursor: pointer;
+            font-size: 1.2em;
+            font-weight: bold;
+            padding: 0 5px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 150px;
+            padding: 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            font-size: 1em;
+            resize: vertical;
+            box-sizing: border-box;
+            background: rgba(255, 255, 255, 0.5);
+            transition: all 0.3s ease;
+        }
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary-start);
+            box-shadow: 0 0 0 4px rgba(106, 17, 203, 0.1);
+        }
+
+        .submit-btn {
+            display: block;
+            width: 100%;
+            padding: 18px;
+            font-size: 1.1em;
+            font-weight: 600;
+            color: #fff;
+            background: linear-gradient(45deg, var(--primary-start), var(--primary-end));
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+        }
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(106, 17, 203, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <svg width="0" height="0">
+      <defs>
+        <linearGradient id="icon-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:var(--primary-start); stop-opacity:1" />
+          <stop offset="100%" style="stop-color:var(--primary-end); stop-opacity:1" />
+        </linearGradient>
+      </defs>
+    </svg>
+
+    <div class="container">
+        <div class="header">
+            <h1>AI Resume Screener</h1>
+            <p>The smartest way to find your next hire.</p>
+        </div>
+        
+        <form action="/analyze" method="post" enctype="multipart/form-data">
+            <!-- SECTION 1: UPLOAD RESUMES -->
+            <div class="form-section">
+                <!-- THE H2 TAGS HAVE BEEN REMOVED FROM HERE -->
+                <label for="resume-files" class="file-upload-area" id="drop-zone">
+                    <div class="upload-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line>
+                        </svg>
+                    </div>
+                    <span class="upload-text">Drag & Drop or Click to Upload</span>
+                    <span class="upload-hint">Supports PDF, DOCX, TXT, PNG, JPG</span>
+                    <input type="file" id="resume-files" name="resumes" multiple>
+                </label>
+                <div id="file-list-container"></div>
+            </div>
+            
+            <!-- SECTION 2: PASTE JOB DESCRIPTION -->
+            <div class="form-section">
+                 <!-- THE H2 TAGS HAVE BEEN REMOVED FROM HERE -->
+                <textarea name="jd" placeholder="Paste the full job description here..." required></textarea>
+            </div>
+            
+            <button type="submit" class="submit-btn">Find Top Candidates</button>
+        </form>
+    </div>
+    
+    <script>
+        // The JavaScript remains exactly the same
+        const dropZone = document.getElementById('drop-zone');
+        const fileInput = document.getElementById('resume-files');
+        const fileListContainer = document.getElementById('file-list-container');
+        const dataTransfer = new DataTransfer();
+
+        const updateFileList = () => {
+            fileInput.files = dataTransfer.files;
+            fileListContainer.innerHTML = '';
+            for (let i = 0; i < dataTransfer.files.length; i++) {
+                const file = dataTransfer.files[i];
+                const fileItem = document.createElement('div');
+                fileItem.className = 'file-item';
+                const fileName = document.createElement('span');
+                fileName.className = 'file-name';
+                fileName.textContent = file.name;
+                fileItem.appendChild(fileName);
+                const removeBtn = document.createElement('button');
+                removeBtn.className = 'remove-btn';
+                removeBtn.textContent = '×';
+                removeBtn.type = 'button';
+                removeBtn.onclick = () => {
+                    dataTransfer.items.remove(i);
+                    updateFileList();
+                };
+                fileItem.appendChild(removeBtn);
+                fileListContainer.appendChild(fileItem);
+            }
+        };
+
+        const addFiles = (files) => {
+            for (const file of files) {
+                dataTransfer.items.add(file);
+            }
+            updateFileList();
+        };
+
+        fileInput.addEventListener('change', () => {
+            addFiles(fileInput.files);
+        });
+        
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropZone.classList.add('is-dragover');
+        });
+
+        dropZone.addEventListener('dragleave', () => {
+            dropZone.classList.remove('is-dragover');
+        });
+
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropZone.classList.remove('is-dragover');
+            addFiles(e.dataTransfer.files);
+        });
+    </script>
+</body>
+</html>

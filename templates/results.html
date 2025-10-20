@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top Candidates</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-start: #6a11cb;
+            --primary-end: #2575fc;
+            --background-color: #f0f2f5;
+            --card-background: #ffffff;
+            --text-primary: #1a202c;
+            --text-secondary: #4a5568;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background-color);
+            padding: 2em;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        h1 {
+            font-size: 3.5em;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+        
+        .card-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            margin-bottom: 25px;
+            transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+        }
+        .card-link:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 18px 45px rgba(0, 0, 0, 0.1);
+        }
+
+        .candidate-card {
+            background: var(--card-background);
+            border-radius: 24px;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.07);
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(0,0,0,0.02);
+            text-align: left;
+        }
+        
+        .candidate-card h2 {
+            margin: 0 0 25px 0;
+            font-size: 2.2em;
+            line-height: 1.2;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .card-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .rank {
+            font-size: 2.5em;
+            font-weight: 700;
+            color: var(--text-secondary);
+        }
+        
+        .skills-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .skills-tag {
+            background: #eef2f7;
+            color: var(--text-secondary);
+            padding: 8px 18px;
+            border-radius: 12px;
+            font-size: 1em;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .score-circle {
+            width: 100px;
+            height: 100px;
+            position: relative;
+            flex-shrink: 0;
+        }
+        
+        .score-circle svg { transform: rotate(-90deg); }
+        .score-circle circle { fill: none; stroke-width: 12; }
+        .progress-bg { stroke: #e6e6e6; }
+        .progress-bar {
+            stroke: url(#score-gradient);
+            stroke-linecap: round;
+            stroke-dasharray: 264;
+            stroke-dashoffset: 264;
+            animation: progress-animation 1.5s 0.5s ease-out forwards;
+        }
+        
+        @keyframes progress-animation {
+            to { stroke-dashoffset: var(--progress-offset); }
+        }
+
+        .score-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+        
+        .top-match .candidate-card::after {
+            content: 'TOP MATCH';
+            position: absolute;
+            top: 20px;
+            right: -48px;
+            background: linear-gradient(45deg, var(--primary-start), var(--primary-end));
+            color: white;
+            padding: 7px 50px;
+            font-size: 0.75em;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            transform: rotate(45deg);
+        }
+
+        .back-link {
+            display: block;
+            width: fit-content;
+            margin: 20px auto 0;
+            padding: 16px 45px;
+            background: #34495e;
+            color: white;
+            text-decoration: none;
+            border-radius: 16px;
+            font-size: 1.1em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .back-link:hover {
+            transform: translateY(-3px);
+            background: #2c3e50;
+        }
+
+        @media (max-width: 540px) {
+            body { padding: 1em; }
+            h1 { font-size: 2.5em; }
+            .candidate-card { padding: 20px; }
+            .candidate-card h2 { font-size: 1.8em; margin-bottom: 20px; }
+            .rank { font-size: 2em; }
+            .skills-tag { font-size: 0.9em; padding: 6px 14px; }
+            .score-circle { width: 90px; height: 90px; }
+            .score-circle circle { stroke-width: 10; }
+            .score-text { font-size: 1.6em; }
+        }
+    </style>
+</head>
+<body>
+    <svg width="0" height="0">
+      <defs>
+        <linearGradient id="score-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:var(--primary-start)" />
+          <stop offset="100%" style="stop-color:var(--primary-end)" />
+        </linearGradient>
+      </defs>
+    </svg>
+
+    <div class="container">
+        <div class="header">
+            <h1>Candidates</h1>
+        </div>
+        
+        {% for candidate in candidates %}
+        <!-- CORRECTED LINK -->
+        <a href="{{ url_for('serve_resume', filename=candidate.filename) }}" target="_blank" class="card-link {% if loop.first %}top-match{% endif %}">
+            <div class="candidate-card">
+                <h2>{{ candidate.name }}</h2>
+                <div class="card-content">
+                    <div class="rank">#{{ loop.index }}</div>
+                    <div class="skills-container">
+                        {% for skill in candidate.skills[:3] %}
+                        <span class="skills-tag">{{ skill }}</span>
+                        {% endfor %}
+                    </div>
+                    <div class="score-circle" style="--progress-offset: calc(264 - (264 * {{ candidate.score }}) / 100);">
+                        <svg width="100" height="100">
+                            <circle class="progress-bg" cx="50" cy="50" r="42"></circle>
+                            <circle class="progress-bar" cx="50" cy="50" r="42"></circle>
+                        </svg>
+                        <div class="score-text">{{ candidate.score }}%</div>
+                    </div>
+                </div>
+            </div>
+        </a>
+        {% endfor %}
+        
+        <a href="/" class="back-link">Analyze New Batch</a>
+    </div>
+</body>
+</html>

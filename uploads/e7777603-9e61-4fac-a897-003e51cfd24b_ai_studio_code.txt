@@ -1,0 +1,22 @@
+Sarah Jones
+Email: sarah.j@email.com
+Phone: (444) 555-6666
+
+Objective:
+Recent graduate with a degree in Statistics seeking an entry-level Data Analyst position. Eager to apply my knowledge of SQL and data cleaning techniques.
+
+Education:
+B.S. in Statistics - City University (2023)
+
+Experience:
+Data Analyst Intern - Local E-commerce Co. (Summer 2022)
+- Assisted the marketing team by pulling data using basic SQL queries.
+- Cleaned and organized customer datasets in Excel.
+- Helped create weekly performance reports.
+
+Skills:
+- SQL (Intermediate)
+- Python (Basic)
+- Microsoft Excel
+- Data Cleaning
+- Strong attention to detail
